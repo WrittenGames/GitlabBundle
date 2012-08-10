@@ -19,10 +19,10 @@ class RaiseIssueCommand extends ContainerAwareCommand
              ->setDescription( 'Raises an issue on Gitlab' )
              ->addArgument( 'project', InputArgument::REQUIRED, 'Project to raise issue for' )
              ->addArgument( 'title', InputArgument::REQUIRED, 'Issue title' )
-             ->addOption( 'description', InputOption::VALUE_REQUIRED, 'Issue description' )
-             ->addOption( 'user', InputOption::VALUE_REQUIRED, 'Assign issue to this person' )
-             ->addOption( 'milestone', InputOption::VALUE_REQUIRED, 'Assign issue to this milestone' )
-             ->addOption( 'labels', InputOption::VALUE_REQUIRED, 'Tag issue with comma-separated list of labels' );
+             ->addOption( 'description', 'd', InputOption::VALUE_REQUIRED, 'Issue description' )
+             ->addOption( 'user', 'u', InputOption::VALUE_REQUIRED, 'Assign issue to this person' )
+             ->addOption( 'milestone', 'm', InputOption::VALUE_REQUIRED, 'Assign issue to this milestone' )
+             ->addOption( 'labels', 'l', InputOption::VALUE_REQUIRED, 'Tag issue with comma-separated list of labels' );
     }
 
     public function execute( InputInterface $input, OutputInterface $output )
