@@ -4,8 +4,10 @@ namespace WG\GitlabBundle;
 
 class GitlabAPI
 {
-    public function test()
+    protected $privateToken;
+    
+    public function __construct( $privateToken )
     {
-        die( 'foo' );
+        $this->privateToken = $privateToken;
     }
 }

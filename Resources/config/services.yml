@@ -1,7 +1,9 @@
 parameters:
-    wg_gitlab.api.class:  WG\GitlabBundle\GitlabAPI
+    wg_gitlab.api.class:          WG\GitlabBundle\GitlabAPI
+    wg_gitlab.api.private_token:  myPrivateToken
+    wg_gitlab.api.version:        v2
 
 services:
     wg_gitlab.api:
         class: %wg_gitlab.api.class%
-#        arguments: []
+        arguments: [%wg_gitlab.api.private_token%]

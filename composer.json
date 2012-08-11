@@ -1,0 +1,21 @@
+{
+    "name": "writtengames/gitlab-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony WGGitlabBundle",
+    "keywords": ["Gitlab", "GitlabHQ", "API"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Moritz Kraft",
+            "email": "mo@writtengames.com",
+            "homepage": "www.writtengames.com"
+        }
+    ],
+    "require": {
+        "kriswallsmith/buzz": "*"
+    },
+    "autoload": {
+        "psr-0": { "WG\\GitlabBundle": "" }
+    },
+    "target-dir": "WG/GitlabBundle"
+}
