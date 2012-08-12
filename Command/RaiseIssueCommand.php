@@ -11,6 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand,
     Symfony\Component\Console\Input\InputInterface,
     Symfony\Component\Console\Output\OutputInterface;
 
+use WG\GitlabBundle\Entity\User;
+
 class RaiseIssueCommand extends ContainerAwareCommand
 {
     public function configure()

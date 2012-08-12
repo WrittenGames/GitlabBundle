@@ -1,9 +1,19 @@
 parameters:
-    wg_gitlab.api.class:          WG\GitlabBundle\GitlabAPI
-    wg_gitlab.api.private_token:  myPrivateToken
-    wg_gitlab.api.version:        v2
+    wg_gitlab.client.class:         WG\GitlabBundle\Client\BuzzClient
+    wg_gitlab.access_manager.class: WG\GitlabBundle\Gitlab\AccessManager
+    wg_gitlab.api.class:            WG\GitlabBundle\Gitlab\API
 
 services:
-    wg_gitlab.api:
+    gitlab.client:
+        class: %wg_gitlab.client.class%
+    gitlab.access:
+        class: %wg_gitlab.access_manager.class%
+        arguments:
+            - '@security.client'
+            - '@security.context'
+            - '@doctrine.orm.entity_manager'
+    gitlab.api:
         class: %wg_gitlab.api.class%
-        arguments: [%wg_gitlab.api.private_token%]
+        arguments:
+            - '@security.client'
+            - '@gitlab.access'

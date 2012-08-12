@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Set your private API token in an application config file:
- * 
- * wg_gitlab:
- *     private_token:   myPrivateToken
- */
-
 namespace WG\GitlabBundle\DependencyInjection;
 
 use Symfony\Component\HttpKernel\DependencyInjection\Extension,
@@ -14,7 +7,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension,
     Symfony\Component\DependencyInjection\Loader\YamlFileLoader,
     Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class WGGitlabExtension
+class WGGitlabExtension extends Extension
 {
     public function load( array $configs, ContainerBuilder $container )
     {
@@ -25,10 +18,9 @@ class WGGitlabExtension
         $loader = new YamlFileLoader( $container, new FileLocator( __DIR__ . '/../Resources/config' ) );
         $loader->load( 'services.yml' );
         // Set parameters
-        if ( !isset( $config['private_token'] ) )
+        if ( isset( $config['client_class'] ) )
         {
-            throw new \InvalidArgumentException( 'The "private_token" option must be set in your config files.' );
+            $container->setParameter( 'wg_gitlab.client.class', $config['client_class'] );
         }
-        $container->setParameter( 'wg_gitlab.api.private_token', $config['private_token'] );
     }
 }
