@@ -15,7 +15,6 @@ use WG\GitlabBundle\Client\ClientInterface,
 
 class API
 {
-    protected $access;
     protected $client;
     
     public function __construct( ClientInterface $client )
@@ -23,19 +22,37 @@ class API
         $this->client = $client;
     }
     
-    public function setAccess( Access $access )
+    public function getUser( Access $access, $id = null )
     {
-        $this->access = $access;
+        $url = '/user';
+        if ( null !== $id ) $url .= 's/' . $id;
+        $response = $this->client->get( $access, $url );
+        return $response;
     }
     
-    public function getProjects( Access $access )
+    public function getProjects( Access $access, $asArrays = false )
     {
-        $projects = array();
-        $data = $this->client->get( $this->access, '/projects' );
-        if ( is_array( $data ) )
+        $projectData = $this->client->get( $access, '/projects' );
+        if ( !$asArrays && is_array( $projectData ) )
         {
-            
+            $projects = array();
+            foreach ( $projectData as $data )
+            {
+                $projects[] = Project::map( $data );
+            }
+            $projectData = $projects;
         }
+        return $projectData;
+    }
+    
+    public function getProject( Access $access, $projectId, $asArray = false )
+    {
+        $project = $this->client->get( $access, '/projects/' . $projectId );
+        if ( !$asArray && is_array( $project ) )
+        {
+            return Project::map( $project );
+        }
+        return $project;
     }
     
     public function save( $entity )
@@ -79,11 +96,5 @@ class API
         {
             throw new \Exception( 'Deleting instance of ' . get_class( $entity ) . ' not yet implemented upstream.' );
         }
-    }
-    
-    public function getUser( $id = null )
-    {
-        $url = '/user';
-        if ( null !== $id ) $url .= 's/' . $id;
     }
 }

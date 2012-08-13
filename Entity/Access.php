@@ -182,7 +182,7 @@ class Access
         $str = $this->getGitlabHost();
         if ( null !== $this->getGitlabUserName() )
         {
-            $str .= ' (' . $this->getGitlabUserName() . ')';
+            $str = $this->getGitlabUserName() . ' on ' . $str;
         }
         return $str;
     }

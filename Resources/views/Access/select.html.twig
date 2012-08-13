@@ -1,0 +1,25 @@
+
+<form action="" method="post">
+
+    <div class="wg_gitlab_selector">
+        <label>Gitlab account</label>
+        <select id="wg_gitlab_access_selector" name="access_id">
+            {% for data in accessData %}
+                <option value="{{ data.id }}"{% if data.id == access.id %} selected="selected"{% endif %}>
+                    {{ data }}
+                </option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="select" />
+    </div>
+
+</form>
+
+<div class="wg_gitlab_select">
+    <label>Gitlab project</label>
+    <select id="wg_gitlab_project_selector">
+        {% for data in projects %}
+            <option>{{ data.code }}</option>
+        {% endfor %}
+    </select>
+</div>

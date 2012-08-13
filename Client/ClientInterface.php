@@ -6,8 +6,8 @@ use WG\GitlabBundle\Entity\Access;
 
 interface ClientInterface
 {
-    protected function get( Access $access, $url );
-    protected function post( Access $access, $url, $data = array()  );
-    protected function put( Access $access, $url, $data = array()  );
-    protected function delete( Access $access, $url );
+    function get( Access $access, $url );
+    function post( Access $access, $url, $data = array()  );
+    function put( Access $access, $url, $data = array()  );
+    function delete( Access $access, $url );
 }

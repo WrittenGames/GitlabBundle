@@ -11,11 +11,6 @@ class IssueType extends AbstractType
     {
         $builder->add( 'id', 'hidden' );
         $builder->add( 'projectId', 'text' );
-        $builder->add( 'gitlabAccess', 'entity', array(
-            'class' => 'WGGitlabBundle:Access',
-        ));
-        $builder->add( 'gitlabHost' );
-        $builder->add( 'gitlabToken' );
     }
     
     public function getDefaultOptions(array $options)

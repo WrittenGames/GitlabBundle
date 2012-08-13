@@ -1,8 +1,8 @@
 <?php
 
-namespace WG\GitlabBundle\Entity;
+namespace WG\GitlabBundle\Model;
 
-class User
+class User extends BaseModel
 {
     protected $id;
     protected $email;
@@ -40,6 +40,16 @@ class User
         $this->name = $name;
     }
     
+    public function getBlocked()
+    {
+        return $this->blocked;
+    }
+    
+    public function setBlocked( $blocked )
+    {
+        $this->blocked = $blocked;
+    }
+    
     public function isBlocked( $block = null )
     {
         if ( null !== $block ) $this->blocked = $block;
@@ -54,5 +64,16 @@ class User
     public function setCreatedAt( $createdAt )
     {
         $this->createdAt = $createdAt;
+    }
+    
+    static public function map( array $data, User $user = null )
+    {
+        if ( null === $user ) $user = new User();
+        if ( isset( $data['id']         ) ) $user->setId       ( $data['id']         );
+        if ( isset( $data['email']      ) ) $user->setEmail    ( $data['email']      );
+        if ( isset( $data['name']       ) ) $user->setName     ( $data['name']       );
+        if ( isset( $data['blocked']    ) ) $user->setBlocked  ( $data['blocked']    );
+        if ( isset( $data['created_at'] ) ) $user->setCreatedAt( $data['created_at'] );
+        return $user;
     }
 }

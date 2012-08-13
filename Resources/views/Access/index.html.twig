@@ -1,1 +1,33 @@
-Access entity form and list
+
+<h2>Add and delete Gitlab Access credentials</h2>
+
+<form action="" method="post">
+
+    <table>
+        <thead>
+            <tr>
+                <th>Private Token</th>
+                <th>Gitlab Host</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>{{ form_widget( form.gitlabToken ) }}</th>
+                <th>{{ form_widget( form.gitlabHost ) }}</th>
+                <th>{{ form_rest( form ) }}</th>
+                <th><input type="submit" value="add" /></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in accessdata %}
+                <tr>
+                    <td>{{ data.gitlabToken }}</td>
+                    <td>{{ data.gitlabHost }}</td>
+                    <td>{{ data.gitlabUserName }}</td>
+                    <td>[ <a href="{{ path( 'wg_gitlab_access_delete', { 'id': data.id } ) }}">delete</a> ]</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</form>

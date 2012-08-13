@@ -1,8 +1,8 @@
 <?php
 
-namespace WG\GitlabBundle\Entity;
+namespace WG\GitlabBundle\Model;
 
-class Issue
+class Issue extends BaseModel
 {
     protected $id;
     protected $projectId;
@@ -61,5 +61,80 @@ class Issue
     public function setDescription( $description )
     {
         $this->description = $description;
+    }
+    
+    public function getLabels()
+    {
+        return $this->labels;
+    }
+
+    public function setLabels( $labels )
+    {
+        $this->labels = $labels;
+    }
+
+    public function addLabel( $label )
+    {
+        $this->labels[] = $label;
+    }
+
+    public function getMilestone()
+    {
+        return $this->milestone;
+    }
+
+    public function setMilestone( $milestone )
+    {
+        $this->milestone = $milestone;
+    }
+
+    public function getAssignee()
+    {
+        return $this->assignee;
+    }
+
+    public function setAssignee( $assignee )
+    {
+        $this->assignee = $assignee;
+    }
+
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    public function setAuthor( $author )
+    {
+        $this->author = $author;
+    }
+
+    public function getClosed()
+    {
+        return $this->closed;
+    }
+
+    public function setClosed( $closed )
+    {
+        $this->closed = $closed;
+    }
+
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt( $updatedAt )
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt( $createdAt )
+    {
+        $this->createdAt = $createdAt;
     }
 }

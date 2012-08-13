@@ -4,16 +4,18 @@ parameters:
     wg_gitlab.api.class:            WG\GitlabBundle\Gitlab\API
 
 services:
+    # HTTP client
     gitlab.client:
         class: %wg_gitlab.client.class%
-    gitlab.access:
-        class: %wg_gitlab.access_manager.class%
-        arguments:
-            - '@security.client'
-            - '@security.context'
-            - '@doctrine.orm.entity_manager'
+    # API wrapper
     gitlab.api:
         class: %wg_gitlab.api.class%
         arguments:
-            - '@security.client'
-            - '@gitlab.access'
+            - '@gitlab.client'
+    # Access management
+    gitlab.access:
+        class: %wg_gitlab.access_manager.class%
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@security.context'
+            - '@gitlab.api'
