@@ -123,7 +123,7 @@ $access = $this->getDoctrine()->getRepository( 'WGGitlabBundle:Access' )->find( 
 
 // Obtain an API implementation instance for provided credentials
 
-$api = $this->get( 'gitlab' )->getAPI( $access );
+$api = $this->get( 'gitlab' )->getApi( $access );
 
 // Call methods defined in WG\GitlabBundle\API\ApiInterface
 
