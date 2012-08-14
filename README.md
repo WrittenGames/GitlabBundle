@@ -1,5 +1,5 @@
-WGGitlabBundle
-==============
+Written Games GitlabBundle
+==========================
 
 The GitlabBundle offers basic integration of the API introduced in Gitlab 2.7
 
@@ -29,7 +29,7 @@ Add the following lines in your composer.json
 }
 ```
 
-Run composer.phar.
+Run composer.phar and skip to *Step 3*.
 
 ### Step 1 (alternative): Installation using the `bin/vendors.php` method
 
@@ -70,7 +70,7 @@ $ git submodule init
 $ git submodule update
 ```
 
-### Step 2: Configure the autoloader
+### Step 2: Configure the autoloader (Symfony 2.0)
 
 Add the following entries to your autoloader:
 

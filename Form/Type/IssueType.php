@@ -10,7 +10,9 @@ class IssueType extends AbstractType
     public function buildForm( FormBuilder $builder, array $options )
     {
         $builder->add( 'id', 'hidden' );
-        $builder->add( 'projectId', 'text' );
+        $builder->add( 'projectId' );
+        $builder->add( 'title' );
+        $builder->add( 'description', 'textarea' );
     }
     
     public function getDefaultOptions(array $options)
