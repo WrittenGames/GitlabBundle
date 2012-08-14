@@ -6,14 +6,22 @@
     <table>
         <thead>
             <tr>
+                <th>API type</th>
+                <th>API version</th>
+                <th>API server</th>
                 <th>Private Token</th>
-                <th>Gitlab Host</th>
                 <th></th>
                 <th></th>
             </tr>
             <tr>
-                <th>{{ form_widget( form.gitlabToken ) }}</th>
-                <th>{{ form_widget( form.gitlabHost ) }}</th>
+                <th>{{ form_widget( form.apiType ) }}</th>
+                <th>{{ form_widget( form.apiVersion ) }}</th>
+                <th>
+                    {{ form_widget( form.apiHostProtocol ) }}
+                    ://
+                    {{ form_widget( form.apiHost ) }}
+                </th>
+                <th>{{ form_widget( form.privateToken ) }}</th>
                 <th>{{ form_rest( form ) }}</th>
                 <th><input type="submit" value="add" /></th>
             </tr>
@@ -21,9 +29,11 @@
         <tbody>
             {% for data in accessdata %}
                 <tr>
-                    <td>{{ data.gitlabToken }}</td>
-                    <td>{{ data.gitlabHost }}</td>
-                    <td>{{ data.gitlabUserName }}</td>
+                    <td>{{ data.apiTypeHumanReadable }}</td>
+                    <td>{{ data.apiVersion }}</td>
+                    <td>{{ data.apiHostProtocolHumanReadable }}://{{ data.apiHost }}</td>
+                    <td>{{ data.privateToken }}</td>
+                    <td>{{ data.remoteUsername }}</td>
                     <td>[ <a href="{{ path( 'wg_gitlab_access_delete', { 'id': data.id } ) }}">delete</a> ]</td>
                 </tr>
             {% endfor %}

@@ -3,12 +3,15 @@ WGGitlabBundle
 
 The GitlabBundle offers basic integration of the API introduced in Gitlab 2.7
 
+So far only the Gitlab API v2 is implemented. It can easily be extended to
+include the Gitlab API v3 and the Github API v3. Merge requests welcome.
+
 ## Installation
 
 You'll need both the [Buzz library](kriswallsmith/Buzz)
 and this bundle. Installation depends on how your project is set up:
 
-### Step 1 (Symfony 2.1): Installation using composer.phar
+### Step 1: Installation using composer.phar
 
 Add the following lines in your composer.json
 
@@ -28,7 +31,7 @@ Add the following lines in your composer.json
 
 Run composer.phar.
 
-### Step 1 (Symfony 2.0): Installation using the `bin/vendors.php` method
+### Step 1 (alternative): Installation using the `bin/vendors.php` method
 
 If you're using the `bin/vendors.php` method to manage your vendor libraries,
 add the following entries to the `deps` file at the root of your project file:
@@ -114,26 +117,23 @@ Congratulations! You're ready to use the GitlabBundle!
 ``` php
 <?php
 
-use WG\GitlabBundle\Entity\Issue;
+// Get credentials containing a user's token, a Gitlab host and an API version, e.g. via a form
 
-// Get API wrapper service:
-$gitlab = $serviceContainer->get( 'gitlab.api' );
+$access = $this->getDoctrine()->getRepository( 'WGGitlabBundle:Access' )->find( $someId );
 
-// Set access data:
-$gitlab->setAccess( $access );
+// Obtain an API implementation instance for provided credentials
 
-// Create an Issue instance and set two mandatory parameters:
-$issue = new Issue( 'my-project-id', 'My Issue Title' );
+$api = $this->get( 'gitlab' )->getAPI( $access );
 
-// Optionally set some other parameters:
-$issue->setDescription( 'Detailled description of my issue' );
+// Call methods defined in WG\GitlabBundle\API\ApiInterface
 
-// Save instance on Gitlab:
-$gitlab->save( $issue );
+$projects = $api->getProjects();
 
-// List all issues for a project:
-$issues = $gitlab->listIssues( 'my-project-id' );
+$issues = $api->getIssues();
+
 ```
+
+Complete examples can be found in the built-in controllers.
 
 ## Configuration
 

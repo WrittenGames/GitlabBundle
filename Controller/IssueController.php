@@ -20,7 +20,7 @@ class IssueController extends Controller
             $form->bindRequest( $request );
             if ( $form->isValid() )
             {
-                $this->get( 'gitlab.api' )->save( $issue );
+                $this->get( 'gitlab' )->createIssue( $issue );
                 // TODO: set flash variable "issue raised etc."
                 return $this->redirect( $this->generateUrl( $request->get('_route') ) );
             }

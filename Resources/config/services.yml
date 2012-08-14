@@ -1,21 +1,15 @@
 parameters:
-    wg_gitlab.client.class:         WG\GitlabBundle\Client\BuzzClient
-    wg_gitlab.access_manager.class: WG\GitlabBundle\Gitlab\AccessManager
-    wg_gitlab.api.class:            WG\GitlabBundle\Gitlab\API
+    wg_gitlab.client.class:       WG\GitlabBundle\Client\Buzz\BuzzClient
+    wg_gitlab.api_manager.class:  WG\GitlabBundle\API\ApiManager
 
 services:
     # HTTP client
     gitlab.client:
         class: %wg_gitlab.client.class%
-    # API wrapper
-    gitlab.api:
-        class: %wg_gitlab.api.class%
-        arguments:
-            - '@gitlab.client'
-    # Access management
-    gitlab.access:
-        class: %wg_gitlab.access_manager.class%
+    # API management
+    gitlab:
+        class: %wg_gitlab.api_manager.class%
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@security.context'
-            - '@gitlab.api'
+            - '@gitlab.client'
