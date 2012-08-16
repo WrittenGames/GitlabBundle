@@ -7,8 +7,9 @@
 
 namespace WG\GitlabBundle\API;
 
-use WG\GitlabBundle\Entity\Access,
-    WG\GitlabBundle\Client\HttpClientInterface;
+use WG\GitlabBundle\Client\HttpClientInterface,
+    WG\GitlabBundle\Entity\Access,
+    WG\GitlabBundle\Model\Issue;
 
 interface ApiInterface
 {
@@ -76,22 +77,29 @@ interface ApiInterface
     public function getIssue( $projectId, $issueId );
     
     /**
-     * Updates an issue
+     * Deletes a project's issue
      * 
      * @param mixed $projectId
      * @param integer $issueId
-     * @param array $data
      * @return boolean
      */
-    public function editIssue( $projectId, $issueId, array $data = array() );
+    public function deleteIssue( $projectId, $issueId );
     
     /**
      * Creates an issue
      * 
-     * @param mixed $projectId
-     * @param string $issueTitle
+     * @param Issue $issue
      * @param array $data
      * @return boolean
      */
-    public function createIssue( $projectId, $issueTitle, array $data = array() );
+    public function createIssue( Issue $issue );
+    
+    /**
+     * Updates an issue
+     * 
+     * @param Issue $issue
+     * @param array $data
+     * @return boolean
+     */
+    public function editIssue( Issue $issue );
 }

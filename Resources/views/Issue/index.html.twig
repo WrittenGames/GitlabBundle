@@ -1,4 +1,10 @@
 
+{% if app.session.hasFlash( 'wg_gitlab_notice' ) %}
+    <div class="wg_gitlab_notice">
+        {{ app.session.flash( 'wg_gitlab_notice' ) }}
+    </div>
+{% endif %}
+
 {% render 'WGGitlabBundle:Access:select' %}
 
 <form id="wg_gitlab_issue_form" action="" method="post">
@@ -10,24 +16,30 @@
 </form>
 
 <script type="text/javascript">
-    var select = document.getElementById( 'wg_gitlab_project_selector' );
-    presetProjectFieldInIssueForm( select.value );
-    if ( select.children.length > 1 )
+    var selectProject = document.getElementById( 'wg_gitlab_project_selector' );
+    presetProjectFieldInIssueForm( selectProject.value );
+    if ( selectProject.children.length > 1 )
     {
-        select.onchange = projectSwitched;
+        selectProject.onchange = projectSwitched;
     }
-    else if ( select.children.length < 1 )
+    else if ( selectProject.children.length < 1 )
     {
         document.getElementById( 'wg_gitlab_issue_form' ).style.display = 'none';
     }
+    var selectAccess = document.getElementById( 'wg_gitlab_access_selector' );
+    presetAccessFieldInIssueForm( selectAccess.value );
+    //
     function projectSwitched( evt )
     {
         var select = evt.target;
         presetProjectFieldInIssueForm( select.value );
     }
+    function presetAccessFieldInIssueForm( accessId )
+    {
+        document.getElementById( 'gitlabissue_access_id' ).value = accessId;
+    }
     function presetProjectFieldInIssueForm( projectId )
     {
-        var field = document.getElementById( 'gitlabissue_projectId' );
-        field.value = projectId;
+        document.getElementById( 'gitlabissue_projectId' ).value = projectId;
     }
 </script>

@@ -2,13 +2,15 @@
 
 namespace WG\GitlabBundle\API\Gitlab;
 
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface,
+    Symfony\Component\HttpKernel\Exception\HttpException;
 
 use Doctrine\Common\Persistence\ObjectManager;
 
 use WG\GitlabBundle\API\ApiInterface,
     WG\GitlabBundle\Client\HttpClientInterface,
-    WG\GitlabBundle\Entity\Access;
+    WG\GitlabBundle\Entity\Access,
+    WG\GitlabBundle\Model\Issue;
 
 class APIv2 implements ApiInterface
 {
@@ -31,7 +33,7 @@ class APIv2 implements ApiInterface
      * @param array $data
      * @return mixed
      * @throws \InvalidArgumentException
-     * @throws \HttpException 
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException 
      */
     protected function call( $httpMethod, $url, array $data = array() )
     {
@@ -56,7 +58,7 @@ class APIv2 implements ApiInterface
         $statusCode = $httpResponse->getStatusCode();
         if ( !in_array( $statusCode, $benignStatusCodes ) )
         {
-            throw new \HttpException( 'API Server returned status code ' . $statusCode );
+            throw new HttpException( 'API Server returned status code ' . $statusCode );
         }
         return json_decode( $httpResponse->getBody(), true );
     }
@@ -77,7 +79,7 @@ class APIv2 implements ApiInterface
         $host = $this->access->getApiHost();
         $protocol = $this->access->getApiHostProtocol() == Access::HOST_PROTOCOL_HTTP
                     ? 'http' : 'https';
-        return $protocol . '://' . $host . '/api/' . $version . '/' . $url . '?private_token=' . $token;
+        return $protocol . '://' . $host . '/api/' . $version . $url . '?private_token=' . $token;
     }
 
     /**
@@ -89,7 +91,7 @@ class APIv2 implements ApiInterface
         {
             $user = $this->getUser();
         }
-        catch( \HttpException $e )
+        catch( HttpException $e )
         {
             return null;
         }
@@ -137,7 +139,54 @@ class APIv2 implements ApiInterface
     }
 
     /**
-     *
+     * @param Issue $issue
+     * @return boolean
+     * @throws \InvalidArgumentException 
+     */
+    public function createIssue( Issue $issue )
+    {
+        if ( null === $issue->getTitle() ) throw new \InvalidArgumentException( 'Issue must have a title!' );
+        if ( null === $issue->getProjectId() ) throw new \InvalidArgumentException( 'Issue must have a project ID!' );
+        $url = '/projects/' . $issue->getProjectId() . '/issues';
+        $data = array(
+            'id' => $issue->getProjectId(),
+            'title' => $issue->getTitle(),
+        );
+        if ( null !== $issue->getDescription() ) $data['description'] = $issue->getDescription();
+        try
+        {
+            $this->call( 'post', $url, $data );
+        }
+        catch( HttpException $e )
+        {
+            return false;
+        }
+        return true;
+    }
+    
+    /**
+     * @param mixed $projectId
+     * @param integer $issueId
+     * @return boolean
+     */
+    public function deleteIssue( $projectId, $issueId )
+    {
+        throw new \Exception( 'Method not implemented yet.' );
+        if ( null === $issueId ) throw new \InvalidArgumentException( 'Need an issue ID to delete issue!' );
+        if ( null === $projectId ) throw new \InvalidArgumentException( 'Need a project ID to delete issue!' );
+        $url = '/projects/' . $projectId . '/issues/' . $issueId;
+        try
+        {
+            $this->call( 'delete', $url );
+        }
+        catch( HttpException $e )
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * @param mixed $projectId
      * @return array
      * @throws \InvalidArgumentException 
@@ -149,7 +198,6 @@ class APIv2 implements ApiInterface
     }
 
     /**
-     *
      * @param mixed $projectId
      * @param integer $issueId
      * @return array
@@ -162,28 +210,11 @@ class APIv2 implements ApiInterface
     }
 
     /**
-     *
-     * @param mixed $projectId
-     * @param string $issueTitle
-     * @param array $data
+     * @param Issue $issue
      * @return boolean
      * @throws \InvalidArgumentException 
      */
-    public function createIssue( $projectId, $issueTitle, array $data = array() )
-    {
-        throw new \Exception( 'Method not implemented yet.' );
-        // TODO
-    }
-
-    /**
-     *
-     * @param mixed $projectId
-     * @param integer $issueId
-     * @param array $data
-     * @return boolean
-     * @throws \InvalidArgumentException 
-     */
-    public function editIssue( $projectId, $issueId, array $data = array() )
+    public function editIssue( Issue $issue )
     {
         throw new \Exception( 'Method not implemented yet.' );
         // TODO
