@@ -163,6 +163,27 @@ class APIv2 implements ApiInterface
         }
         return true;
     }
+
+    /**
+     * @param mixed $projectId
+     * @param integer $issueId
+     * @return array
+     * @throws \InvalidArgumentException 
+     */
+    public function getIssue( $projectId, $issueId )
+    {
+        if ( null === $issueId ) throw new \InvalidArgumentException( 'Need an issue ID to delete issue!' );
+        if ( null === $projectId ) throw new \InvalidArgumentException( 'Need a project ID to delete issue!' );
+        $url = '/projects/' . $projectId . '/issues/' . $issueId;
+        try
+        {
+            return $this->call( 'get', $url );
+        }
+        catch( HttpException $e )
+        {
+            return false;
+        }
+    }
     
     /**
      * @param mixed $projectId
@@ -192,18 +213,6 @@ class APIv2 implements ApiInterface
      * @throws \InvalidArgumentException 
      */
     public function getIssues( $projectId = null )
-    {
-        throw new \Exception( 'Method not implemented yet.' );
-        // TODO
-    }
-
-    /**
-     * @param mixed $projectId
-     * @param integer $issueId
-     * @return array
-     * @throws \InvalidArgumentException 
-     */
-    public function getIssue( $projectId, $issueId )
     {
         throw new \Exception( 'Method not implemented yet.' );
         // TODO

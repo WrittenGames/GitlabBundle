@@ -7,6 +7,10 @@ wg_gitlab_issue_delete:
     pattern:  /issue/{id}/delete
     defaults: { _controller: WGGitlabBundle:Issue:delete }
 
+wg_gitlab_issue:
+    pattern:  /issue/{id}
+    defaults: { _controller: WGGitlabBundle:Issue:view }
+
 wg_gitlab_access:
     pattern:  /access
     defaults: { _controller: WGGitlabBundle:Access:index }

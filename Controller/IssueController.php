@@ -38,6 +38,16 @@ class IssueController extends Controller
         ));
     }
     
+    public function viewAction( Request $request )
+    {
+//        $access = $this->get( 'gitlab' )->getAccessData( 2 );
+//        if ( $access )
+//        {
+//            $this->get( 'gitlab' )->getApi( $access )->getIssue( 2, 28 );
+//        }
+        return new Response( 'Not implemented yet' );
+    }
+    
     public function deleteAction( Request $request )
     {
 //        $access = $this->get( 'gitlab' )->getAccessData( 2 );
