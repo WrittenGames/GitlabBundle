@@ -172,8 +172,8 @@ class APIv2 implements ApiInterface
      */
     public function getIssue( $projectId, $issueId )
     {
-        if ( null === $issueId ) throw new \InvalidArgumentException( 'Need an issue ID to delete issue!' );
-        if ( null === $projectId ) throw new \InvalidArgumentException( 'Need a project ID to delete issue!' );
+        if ( null === $issueId ) throw new \InvalidArgumentException( 'Need an issue ID to retrieve issue!' );
+        if ( null === $projectId ) throw new \InvalidArgumentException( 'Need a project ID to retrieve issue!' );
         $url = '/projects/' . $projectId . '/issues/' . $issueId;
         try
         {

@@ -35,8 +35,9 @@ class AccessController extends Controller
                 if ( $form->isValid() )
                 {
                     $api = $this->get( 'gitlab' )->getApi( $newAccess );
-                    if ( $api->authenticate( $newAccess ) )
+                    if ( null !== $access = $api->authenticate( $newAccess ) )
                     {
+                        $this->get( 'session' )->set( 'wg_gitlab_access_id', $access->getId() );
                         $em = $this->getDoctrine()->getEntityManager();
                         $em->persist( $newAccess );
                         $em->flush();
@@ -72,6 +73,7 @@ class AccessController extends Controller
         $access = null !== $request->get( 'access_id' )
                 ? $this->get( 'gitlab' )->getAccessData( $request->get( 'access_id' ) )
                 : $accessData[0];
+        $this->get( 'session' )->set( 'wg_gitlab_access_id', $access->getId() );
         $api = $this->get( 'gitlab' )->getApi( $access );
         $projects = $api->getProjects();
         return $this->render( 'WGGitlabBundle:Access:select.html.twig', array(
