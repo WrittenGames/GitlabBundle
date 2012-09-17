@@ -155,7 +155,7 @@ class APIv2 implements ApiInterface
         if ( null !== $issue->getDescription() ) $data['description'] = $issue->getDescription();
         try
         {
-            $this->call( 'post', $url, $data );
+            return $this->call( 'post', $url, $data );
         }
         catch( HttpException $e )
         {
