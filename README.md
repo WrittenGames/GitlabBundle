@@ -1,4 +1,4 @@
-## Bundle not maintained anymore - please use the [Cisco Gitlab Bundle](https://github.com/CiscoVE/GitlabBundle) instead.
+#### Bundle not maintained anymore - please use the [Cisco Gitlab Bundle](https://github.com/CiscoVE/GitlabBundle) instead.
 
 ------
 
